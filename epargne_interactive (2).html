@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EpargnePro — Produits d'épargne bancaire</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0C1B33;--navy2:#1a2d4a;
+  --gold:#B8860B;--gold2:#DAA520;--gold-light:#FDF3D0;
+  --ct:#0F6E56;--ct2:#1D9E75;--ct-bg:#E1F5EE;--ct-t:#085041;
+  --mt:#185FA5;--mt2:#378ADD;--mt-bg:#E6F1FB;--mt-t:#0C447C;
+  --lt:#534AB7;--lt2:#7F77DD;--lt-bg:#EEEDFE;--lt-t:#26215C;
+  --off:#F7F6F3;--border:#E2DFD8;--text:#1C1C1A;--muted:#666660;
+}
+body{font-family:'Helvetica Neue',Arial,sans-serif;background:var(--off);color:var(--text);font-size:14px}
+.topbar{background:var(--navy);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:50px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-logo{width:26px;height:26px;background:var(--gold2);border-radius:4px;display:flex;align-items:center;justify-content:center}
+.brand-name{font-size:13px;font-weight:500;color:#fff;letter-spacing:0.04em}
+.brand-sub{font-size:10px;color:#8899AA;letter-spacing:0.06em;text-transform:uppercase}
+.prog-wrap{display:flex;align-items:center;gap:8px}
+.prog-label{font-size:11px;color:#8899AA}
+.prog-bar-bg{width:90px;height:4px;background:#1e3050;border-radius:2px;overflow:hidden}
+.prog-bar-fg{height:100%;background:var(--gold2);border-radius:2px;transition:width .4s}
+.nav{background:var(--navy2);padding:0 20px;display:flex;gap:0;border-bottom:1px solid #1e3050;overflow-x:auto}
+.nb{padding:11px 14px;font-size:11px;font-weight:500;color:#8899AA;background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;letter-spacing:0.04em;text-transform:uppercase;white-space:nowrap}
+.nb:hover{color:#CBD5E0}
+.nb.active{color:#fff;border-bottom-color:var(--gold2)}
+.hero{background:var(--navy);padding:28px 20px 24px}
+.hero-eyebrow{font-size:10px;font-weight:500;color:var(--gold2);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:6px}
+.hero-title{font-size:20px;font-weight:500;color:#fff;margin-bottom:5px}
+.hero-desc{font-size:12px;color:#8899AA;line-height:1.6;max-width:500px}
+.hero-stats{display:flex;gap:20px;margin-top:18px}
+.stat{text-align:center}
+.stat-n{font-size:20px;font-weight:500;color:#fff}
+.stat-l{font-size:10px;color:#8899AA;text-transform:uppercase;letter-spacing:0.05em;margin-top:2px}
+.sdiv{width:1px;background:#1e3050}
+.cat-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:16px 20px}
+.cat-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;cursor:pointer;border-top:3px solid;transition:all .15s}
+.cat-card:hover{background:#FDFCFA;border-color:#B0ABA0}
+.cat-card .cc-icon{font-size:20px;margin-bottom:8px}
+.cat-card .cc-name{font-size:12px;font-weight:500;color:var(--text);margin-bottom:3px}
+.cat-card .cc-info{font-size:11px;color:var(--muted)}
+.cat-card .cc-link{margin-top:8px;font-size:11px;font-weight:500}
+.rule-box{margin:0 20px 20px;background:var(--navy);border-radius:8px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start}
+.rule-icon{width:30px;height:30px;background:rgba(218,165,32,0.15);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rule-title{font-size:12px;font-weight:500;color:#fff;margin-bottom:3px}
+.rule-text{font-size:11px;color:#8899AA;line-height:1.6}
+.cat-strip{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:var(--off);border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px}
+.cs-left{display:flex;align-items:center;gap:8px}
+.cs-dot{width:9px;height:9px;border-radius:50%}
+.cs-name{font-size:12px;font-weight:500;color:var(--text)}
+.cs-hz{font-size:11px;color:var(--muted);margin-left:4px}
+.cs-chips{display:flex;gap:5px;flex-wrap:wrap}
+.chip{font-size:10px;padding:2px 8px;border-radius:99px;font-weight:500}
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;padding:14px 20px}
+.ptile{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px 12px;cursor:pointer;transition:all .15s;position:relative;overflow:hidden}
+.ptile::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.ptile.ct::before{background:var(--ct2)}
+.ptile.mt::before{background:var(--mt2)}
+.ptile.lt::before{background:var(--lt2)}
+.ptile:hover{border-color:#B0ABA0;background:#FDFCFA}
+.ptile.seen::after{content:'';position:absolute;top:8px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--gold2)}
+.tile-icon{font-size:20px;margin-bottom:8px}
+.tile-name{font-size:12px;font-weight:500;color:var(--text);line-height:1.3;margin-bottom:3px}
+.tile-cat{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.04em}
+.back-btn{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--muted);background:none;border:none;cursor:pointer;padding:14px 20px 0;width:100%}
+.back-btn:hover{color:var(--text)}
+.dcard{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:10px 20px 20px}
+.dh{padding:18px 20px;border-bottom:1px solid var(--border)}
+.dh-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;gap:10px;flex-wrap:wrap}
+.dh-left{display:flex;align-items:center;gap:12px}
+.dh-title{font-size:17px;font-weight:500;color:var(--text);margin-bottom:3px}
+.dh-sub{font-size:12px;color:var(--muted)}
+.dh-badge{font-size:11px;font-weight:500;padding:4px 11px;border-radius:99px;white-space:nowrap}
+.dh-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.dtag{font-size:11px;padding:3px 9px;border-radius:4px;background:var(--off);color:var(--muted);border:1px solid var(--border)}
+.dsec{padding:16px 20px;border-bottom:1px solid var(--border)}
+.dsec-title{font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.fields-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fi{background:var(--off);border-radius:6px;padding:9px 11px}
+.fi-l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:3px}
+.fi-v{font-size:12px;font-weight:500;color:var(--text)}
+.pc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pcbox{border-radius:6px;padding:11px 13px}
+.pcbox.pros{background:#E1F5EE}
+.pcbox.cons{background:#FCEBEB}
+.pcbox-t{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:7px}
+.pcbox.pros .pcbox-t{color:#0F6E56}
+.pcbox.cons .pcbox-t{color:#A32D2D}
+.pci{display:flex;align-items:flex-start;gap:5px;margin-bottom:5px;font-size:11px;line-height:1.4}
+.pcbox.pros .pci{color:#085041}
+.pcbox.cons .pci{color:#791F1F}
+.pcdot{width:4px;height:4px;border-radius:50%;margin-top:4px;flex-shrink:0}
+.pcbox.pros .pcdot{background:#1D9E75}
+.pcbox.cons .pcdot{background:#E24B4A}
+.memo-box{background:var(--gold-light);border-radius:6px;padding:11px 13px;display:flex;gap:9px;align-items:flex-start}
+.memo-text{font-size:11px;color:#7A6200;line-height:1.5}
+.dnav{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;border-top:1px solid var(--border)}
+.dnav-btn{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);background:none;border:1px solid var(--border);border-radius:5px;padding:6px 12px;cursor:pointer;transition:all .15s}
+.dnav-btn:hover:not(:disabled){color:var(--text);border-color:#B0ABA0}
+.dnav-btn:disabled{opacity:0.3;cursor:default}
+.dnav-pos{font-size:11px;color:var(--muted)}
+.recap-wrap{padding:16px 20px}
+.rtable{width:100%;border-collapse:collapse;font-size:12px;background:#fff;border-radius:8px;overflow:hidden;border:1px solid var(--border);margin-bottom:16px}
+.rtable th{background:var(--navy);color:#CBD5E0;padding:9px 12px;text-align:left;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.05em}
+.rtable td{padding:10px 12px;border-top:1px solid var(--border);color:var(--text);font-size:12px}
+.rtable tr:hover td{background:#FDFCFA}
+.rtable tr.rc td{border-left:3px solid var(--ct2)}
+.rtable tr.rm td{border-left:3px solid var(--mt2)}
+.rtable tr.rl td{border-left:3px solid var(--lt2)}
+.ex-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.excard{background:#fff;border:1px solid var(--border);border-radius:8px;padding:12px 14px;border-top:3px solid}
+.ex-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:3px}
+.ex-prod{font-size:12px;font-weight:500;color:var(--text);margin-bottom:2px}
+.ex-obj{font-size:11px;color:var(--muted);margin-bottom:8px}
+.ex-amt{font-size:20px;font-weight:500}
+.kp-box{background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.kp-hd{background:var(--navy);padding:10px 16px;font-size:10px;font-weight:500;color:#CBD5E0;text-transform:uppercase;letter-spacing:0.07em}
+.kpi{display:flex;align-items:flex-start;gap:10px;padding:10px 16px;border-top:1px solid var(--border)}
+.kpi-icon{width:26px;height:26px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.kpi-text{font-size:11px;color:var(--text);line-height:1.5;padding-top:4px}
+.quiz-wrap{padding:16px 20px}
+.qprog{display:flex;gap:4px;margin-bottom:16px}
+.qpd{flex:1;height:3px;border-radius:2px;background:var(--border);transition:background .3s}
+.qpd.done{background:var(--gold2)}
+.qcard{background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:12px}
+.qhd{background:var(--navy);padding:14px 18px}
+.qnum{font-size:10px;color:#8899AA;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:3px}
+.qtext{font-size:13px;font-weight:500;color:#fff;line-height:1.4}
+.qopts{padding:12px 18px;display:flex;flex-direction:column;gap:7px}
+.qopt{background:var(--off);border:1px solid var(--border);border-radius:5px;padding:10px 13px;font-size:12px;cursor:pointer;color:var(--text);text-align:left;transition:all .15s;line-height:1.4}
+.qopt:hover:not(:disabled){background:#FDFCFA;border-color:#B0ABA0}
+.qopt.correct{background:#E1F5EE;border-color:#1D9E75;color:#085041}
+.qopt.wrong{background:#FCEBEB;border-color:#E24B4A;color:#791F1F}
+.qopt:disabled{cursor:default}
+.qfb{margin:0 18px 14px;padding:10px 12px;border-radius:5px;font-size:11px;line-height:1.5}
+.qfb.ok{background:#E1F5EE;color:#085041}
+.qfb.ko{background:#FCEBEB;color:#791F1F}
+.score-box{background:#fff;border:1px solid var(--border);border-radius:10px;padding:24px 20px;text-align:center;margin-top:8px}
+.score-ring{display:inline-flex;align-items:center;justify-content:center;width:72px;height:72px;border-radius:50%;background:var(--navy);margin-bottom:10px}
+.score-n{font-size:22px;font-weight:500;color:#fff}
+.score-msg{font-size:13px;font-weight:500;color:var(--text);margin-bottom:4px}
+.score-sub{font-size:11px;color:var(--muted);margin-bottom:14px}
+.reset-btn{background:var(--navy);color:#fff;border:none;border-radius:6px;padding:8px 22px;font-size:12px;cursor:pointer;font-weight:500}
+@media(max-width:600px){
+  .cat-cards{grid-template-columns:1fr}
+  .fields-grid{grid-template-columns:1fr}
+  .pc-grid{grid-template-columns:1fr}
+  .ex-grid{grid-template-columns:1fr}
+  .dh-top{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-logo"><i class="ti ti-building-bank" style="color:#0C1B33;font-size:14px"></i></div>
+    <div>
+      <div class="brand-name">EpargnePro</div>
+      <div class="brand-sub">Formation bancaire</div>
+    </div>
+  </div>
+  <div class="prog-wrap">
+    <span class="prog-label" id="prog-lbl">0 / 20</span>
+    <div class="prog-bar-bg"><div class="prog-bar-fg" id="prog-fg" style="width:0%"></div></div>
+  </div>
+</div>
+<nav class="nav">
+  <button class="nb active" data-page="accueil" onclick="go('accueil')"><i class="ti ti-home" style="font-size:12px;margin-right:3px"></i>Accueil</button>
+  <button class="nb" data-page="ct" onclick="go('ct')"><i class="ti ti-clock" style="font-size:12px;margin-right:3px"></i>Court terme</button>
+  <button class="nb" data-page="mt" onclick="go('mt')"><i class="ti ti-calendar" style="font-size:12px;margin-right:3px"></i>Moyen terme</button>
+  <button class="nb" data-page="lt" onclick="go('lt')"><i class="ti ti-trending-up" style="font-size:12px;margin-right:3px"></i>Long terme</button>
+  <button class="nb" data-page="recap" onclick="go('recap')"><i class="ti ti-table" style="font-size:12px;margin-right:3px"></i>Récapitulatif</button>
+  <button class="nb" data-page="quiz" onclick="go('quiz')"><i class="ti ti-certificate" style="font-size:12px;margin-right:3px"></i>Quiz</button>
+</nav>
+<div id="content"></div>
+</div>
+
+<script>
+const CM={
+  ct:{label:'Court terme',hz:'Moins de 2 ans',color:'#1D9E75',bg:'#E1F5EE',tc:'#085041',chips:['Risque très faible','Disponibilité immédiate','Rendement faible']},
+  mt:{label:'Moyen terme',hz:'2 à 8 ans',color:'#378ADD',bg:'#E6F1FB',tc:'#0C447C',chips:['Risque faible à modéré','Disponibilité variable','Rendement moyen']},
+  lt:{label:'Long terme',hz:'Plus de 8 ans',color:'#7F77DD',bg:'#EEEDFE',tc:'#26215C',chips:['Risque modéré à élevé','Disponibilité faible','Rendement élevé possible']},
+};
+const DB={
+  ct:[
+    {id:'la',n:'Livret A',ic:'ti-building-bank',s:'Épargne réglementée de référence',tags:['Garanti','Défiscalisé','Tout public'],
+     f:[{l:'Taux',v:'3 % nets'},{l:'Plafond',v:'22 950 €'},{l:'Disponibilité',v:'Immédiate'},{l:'Fiscalité',v:'Exonéré IR & PS'},{l:'Risque',v:'Nul'},{l:'Accès',v:'Tous publics'}],
+     p:['Totalement défiscalisé','Disponible à tout moment','Capital garanti par l\'État'],
+     c:['Plafond limité à 22 950 €','1 seul livret par personne','Rendement plafonné par décret'],
+     m:'Le Livret A est le produit d\'épargne le plus répandu en France. C\'est souvent le premier conseil à donner à un client souhaitant constituer une épargne de précaution.'},
+    {id:'ldds',n:'LDDS',ic:'ti-leaf',s:'Livret de développement durable et solidaire',tags:['Garanti','Défiscalisé','Solidaire'],
+     f:[{l:'Taux',v:'3 % nets'},{l:'Plafond',v:'12 000 €'},{l:'Disponibilité',v:'Immédiate'},{l:'Fiscalité',v:'Exonéré IR & PS'},{l:'Risque',v:'Nul'},{l:'Accès',v:'Majeurs résidents'}],
+     p:['Exonéré d\'impôts','Fonds disponibles immédiatement','Finance l\'économie locale'],
+     c:['Plafond bas (12 000 €)','Réservé aux majeurs','Cumulable avec Livret A uniquement'],
+     m:'Le LDDS est complémentaire au Livret A. Les fonds collectés financent des projets d\'économie sociale et d\'efficacité énergétique.'},
+    {id:'lep',n:'LEP',ic:'ti-users',s:'Livret d\'épargne populaire',tags:['Meilleur taux','Sous conditions','Garanti'],
+     f:[{l:'Taux',v:'4 % nets'},{l:'Plafond',v:'10 000 €'},{l:'Disponibilité',v:'Immédiate'},{l:'Fiscalité',v:'Exonéré IR & PS'},{l:'Risque',v:'Nul'},{l:'Accès',v:'Sous conditions de revenus'}],
+     p:['Meilleur taux des livrets réglementés','Totalement défiscalisé','Capital sécurisé'],
+     c:['Soumis à conditions de ressources','Plafond modeste (10 000 €)','Non accessible à tous'],
+     m:'Le LEP offre le meilleur rendement parmi les livrets réglementés. À vérifier systématiquement pour les clients aux revenus modestes.'},
+    {id:'lj',n:'Livret Jeune',ic:'ti-mood-smile',s:'Épargne pour les 12-25 ans',tags:['Jeunes','Défiscalisé','Taux libre'],
+     f:[{l:'Taux',v:'Min. 3 % nets'},{l:'Plafond',v:'1 600 €'},{l:'Disponibilité',v:'Immédiate'},{l:'Fiscalité',v:'Exonéré IR & PS'},{l:'Risque',v:'Nul'},{l:'Accès',v:'12 à 25 ans'}],
+     p:['Taux minimum garanti','Défiscalisé','Initiation à l\'épargne'],
+     c:['Plafond très bas (1 600 €)','Fermé obligatoirement à 25 ans','Réservé aux jeunes'],
+     m:'Produit pédagogique par excellence pour introduire les jeunes clients à la gestion de leur argent.'},
+    {id:'csl',n:'Compte sur livret',ic:'ti-wallet',s:'Livret bancaire libre et fiscalisé',tags:['Sans plafond','Flexible','Fiscalisé'],
+     f:[{l:'Taux',v:'Variable (0,5–2 %)'},{l:'Plafond',v:'Aucun'},{l:'Disponibilité',v:'Immédiate'},{l:'Fiscalité',v:'PFU 30 %'},{l:'Risque',v:'Nul'},{l:'Accès',v:'Tous publics'}],
+     p:['Aucun plafond de dépôt','Disponible immédiatement','Simple à ouvrir'],
+     c:['Taux souvent faible','Fiscalisé à 30 % (PFU)','Moins avantageux que les livrets réglementés'],
+     m:'À proposer uniquement lorsque le Livret A et le LDDS sont saturés. Le taux est négociable selon les établissements.'},
+    {id:'ccr',n:'Compte courant rémunéré',ic:'ti-credit-card',s:'Compte bancaire avec rémunération des dépôts',tags:['Quotidien','Disponibilité totale','Faible rendement'],
+     f:[{l:'Taux',v:'Très faible'},{l:'Plafond',v:'Aucun'},{l:'Disponibilité',v:'Immédiate'},{l:'Fiscalité',v:'PFU 30 %'},{l:'Risque',v:'Nul'},{l:'Accès',v:'Tous publics'}],
+     p:['Disponibilité totale','Gestion courante intégrée','Aucun plafond'],
+     c:['Taux très bas','Fiscalisé','Peu adapté à l\'épargne de fond'],
+     m:'Produit de gestion courante, non destiné à l\'épargne structurée. À distinguer clairement des livrets réglementés.'},
+    {id:'lbe',n:'Livret bancaire enfant',ic:'ti-baby-carriage',s:'Épargne dédiée aux mineurs',tags:['Mineurs','Sécurisé','Éducatif'],
+     f:[{l:'Taux',v:'Variable'},{l:'Plafond',v:'Libre'},{l:'Disponibilité',v:'Restreinte (parentale)'},{l:'Fiscalité',v:'Variable'},{l:'Risque',v:'Nul'},{l:'Accès',v:'Mineurs'}],
+     p:['Initiation à l\'épargne dès le jeune âge','Géré par les parents','Capital sécurisé'],
+     c:['Plafond et taux variables selon banque','Contrôle parental requis','Peu rentable'],
+     m:'Idéal pour les parents souhaitant constituer une épargne pour leurs enfants dès le plus jeune âge.'},
+  ],
+  mt:[
+    {id:'pel',n:'PEL',ic:'ti-home',s:'Plan d\'épargne logement',tags:['Réglementé','Prêt immobilier','Versements réguliers'],
+     f:[{l:'Taux',v:'2,25 % brut'},{l:'Plafond',v:'61 200 €'},{l:'Durée',v:'4 à 10 ans'},{l:'Versements',v:'Min. 540 €/an'},{l:'Fiscalité',v:'PFU 30 %'},{l:'Objectif',v:'Projet immobilier'}],
+     p:['Droit à un prêt immobilier associé','Taux garanti à l\'ouverture','Plafond élevé (61 200 €)'],
+     c:['Versements annuels obligatoires','Pénalité si retrait avant 4 ans','Fiscalisé depuis 2018'],
+     m:'Le PEL est le produit phare pour les projets immobiliers. Le droit à prêt associé peut s\'avérer très avantageux selon les taux du marché.'},
+    {id:'cel',n:'CEL',ic:'ti-key',s:'Compte épargne logement',tags:['Flexible','Complémentaire PEL','Liquidité partielle'],
+     f:[{l:'Taux',v:'2 % brut'},{l:'Plafond',v:'15 300 €'},{l:'Durée',v:'Min. 18 mois'},{l:'Versements',v:'Libres (min. 300 €)'},{l:'Fiscalité',v:'PFU 30 %'},{l:'Objectif',v:'Projet immobilier'}],
+     p:['Retraits partiels possibles','Complément naturel du PEL','Versements libres'],
+     c:['Plafond bas (15 300 €)','Taux inférieur au PEL','Fiscalisé (PFU 30 %)'],
+     m:'Le CEL est souvent associé au PEL pour maximiser les droits à prêt immobilier du client.'},
+    {id:'cat',n:'Compte à terme',ic:'ti-calendar-stats',s:'Dépôt bloqué à taux fixe garanti',tags:['Capital garanti','Taux fixe','Prévisible'],
+     f:[{l:'Taux',v:'2–4,5 % brut'},{l:'Plafond',v:'Aucun'},{l:'Durée',v:'1 à 5 ans'},{l:'Disponibilité',v:'À échéance'},{l:'Fiscalité',v:'PFU 30 %'},{l:'Risque',v:'Nul'}],
+     p:['Rendement supérieur aux livrets','Capital entièrement sécurisé','Taux négociable selon montant'],
+     c:['Fonds immobilisés sur toute la durée','Pénalités en cas de retrait anticipé','Fiscalisé à 30 %'],
+     m:'Idéal pour un client disposant d\'une somme à placer sur une durée définie, sans besoin de liquidité pendant la période.'},
+    {id:'avfe',n:'Assurance-vie fonds €',ic:'ti-shield-check',s:'Capital sécurisé avec rendement modéré',tags:['Capital garanti','Rachats possibles','Transmission'],
+     f:[{l:'Taux',v:'2–3 % brut'},{l:'Plafond',v:'Aucun'},{l:'Disponibilité',v:'Rachats possibles'},{l:'Fiscalité',v:'Avantageuse après 8 ans'},{l:'Risque',v:'Très faible'},{l:'Objectif',v:'Épargne moyen terme'}],
+     p:['Capital garanti sur le fonds en euros','Fiscalité avantageuse après 8 ans','Transmission hors succession'],
+     c:['Frais de gestion annuels','Rendement en baisse tendancielle','Délais de rachat de quelques jours'],
+     m:'L\'assurance-vie est l\'enveloppe préférée des Français. Le fonds en euros offre sécurité et avantage fiscal à l\'horizon 8 ans.'},
+    {id:'bc',n:'Bons de caisse',ic:'ti-file-certificate',s:'Titre de créance bancaire à durée fixe',tags:['Capital garanti','FGDR','Taux fixe'],
+     f:[{l:'Taux',v:'Variable selon durée'},{l:'Plafond',v:'Aucun'},{l:'Durée',v:'1 à 5 ans'},{l:'Disponibilité',v:'À échéance'},{l:'Garantie',v:'FGDR jusqu\'à 100 k€'},{l:'Fiscalité',v:'PFU 30 %'}],
+     p:['Taux connu à l\'avance','Garanti par le FGDR','Souple en montant'],
+     c:['Produit peu répandu','Non cotable sur un marché','Fiscalisé à 30 %'],
+     m:'Les bons de caisse sont peu utilisés aujourd\'hui, mais restent une alternative intéressante pour les clients cherchant une épargne à taux fixe.'},
+  ],
+  lt:[
+    {id:'avuc',n:'Assurance-vie UC',ic:'ti-chart-line',s:'Placement investi sur les marchés financiers',tags:['Marchés financiers','Fort potentiel','Transmission'],
+     f:[{l:'Plafond',v:'Aucun'},{l:'Durée',v:'Min. 8 ans recommandés'},{l:'Disponibilité',v:'Rachats possibles'},{l:'Fiscalité',v:'Avantageuse après 8 ans'},{l:'Supports',v:'Actions, oblig., immo.'},{l:'Risque',v:'Élevé'}],
+     p:['Fort potentiel de rendement','Fiscalité très avantageuse après 8 ans','Transmission hors succession'],
+     c:['Capital non garanti','Risque de perte en capital','Frais de gestion et d\'arbitrage'],
+     m:'Les unités de compte permettent une exposition aux marchés financiers. À réserver aux profils dynamiques acceptant le risque de perte en capital.'},
+    {id:'avms',n:'Assurance-vie multisupport',ic:'ti-adjustments',s:'Équilibre entre sécurité et performance',tags:['Mixte','Flexible','Arbitrages'],
+     f:[{l:'Plafond',v:'Aucun'},{l:'Durée',v:'Min. 8 ans'},{l:'Disponibilité',v:'Rachats possibles'},{l:'Fiscalité',v:'Avantageuse après 8 ans'},{l:'Supports',v:'Fonds € + UC'},{l:'Risque',v:'Faible à élevé'}],
+     p:['Équilibre sécurité et rendement','Grande souplesse d\'allocation','Fiscalité avantageuse'],
+     c:['Frais de gestion multiples','Complexité des arbitrages','Risque variable selon allocation'],
+     m:'Solution la plus répandue en assurance-vie. Permet d\'adapter le profil de risque grâce aux arbitrages entre fonds euros et UC.'},
+    {id:'per',n:'PER',ic:'ti-user-check',s:'Plan d\'épargne retraite individuel',tags:['Déduction fiscale','Retraite','Gestion pilotée'],
+     f:[{l:'Plafond',v:'Selon revenus imposables'},{l:'Durée',v:'Jusqu\'à la retraite'},{l:'Disponibilité',v:'Retraite (cas exceptionnels)'},{l:'Fiscalité',v:'Déduction IR à l\'entrée'},{l:'Supports',v:'Fonds €, UC'},{l:'Risque',v:'Variable'}],
+     p:['Déduction des versements du revenu imposable','Sortie en capital ou en rente au choix','Sécurisation progressive approche retraite'],
+     c:['Fonds bloqués jusqu\'à la retraite','Imposition à la sortie','Frais parfois élevés'],
+     m:'Le PER est particulièrement attractif pour les contribuables fortement imposés. L\'économie fiscale peut atteindre 45 % du versement.'},
+    {id:'pea',n:'PEA',ic:'ti-flag',s:'Plan d\'épargne en actions',tags:['Actions européennes','Exonération IR','Fort potentiel'],
+     f:[{l:'Plafond',v:'150 000 €'},{l:'Durée',v:'Min. 5 ans recommandés'},{l:'Disponibilité',v:'Clôture si retrait < 5 ans'},{l:'Fiscalité',v:'Exonéré IR après 5 ans'},{l:'Supports',v:'Actions, OPCVM européens'},{l:'Risque',v:'Moyen à élevé'}],
+     p:['Exonération d\'IR sur les plus-values après 5 ans','Fort potentiel de rendement long terme','Plafond élevé (150 000 €)'],
+     c:['Capital non garanti','Clôture obligatoire si retrait avant 5 ans','Limité aux valeurs européennes'],
+     m:'Le PEA est l\'enveloppe de référence pour investir en actions françaises et européennes avec une fiscalité optimisée sur le long terme.'},
+    {id:'scpi',n:'SCPI',ic:'ti-building',s:'Société civile de placement immobilier',tags:['Immobilier indirect','Revenus réguliers','Accessible'],
+     f:[{l:'Rendement',v:'4–6 % brut'},{l:'Ticket d\'entrée',v:'Dès 1 000 €'},{l:'Durée',v:'8–10 ans minimum'},{l:'Disponibilité',v:'Faible (marché secondaire)'},{l:'Fiscalité',v:'Revenus fonciers'},{l:'Risque',v:'Moyen'}],
+     p:['Rendement attractif sur le long terme','Mutualisation du risque immobilier','Gestion entièrement déléguée'],
+     c:['Liquidité faible','Frais d\'entrée élevés (8–12 %)','Capital non garanti'],
+     m:'Les SCPI permettent d\'accéder à l\'immobilier locatif professionnel à partir de quelques milliers d\'euros. Idéal pour diversifier un patrimoine.'},
+    {id:'opcvm',n:'OPCVM',ic:'ti-world',s:'Placement collectif sur marchés financiers',tags:['Diversification','Gestion collective','Accessible'],
+     f:[{l:'Plafond',v:'Aucun'},{l:'Disponibilité',v:'Bonne (J+2 à J+5)'},{l:'Fiscalité',v:'PFU 30 %'},{l:'Supports',v:'Actions, oblig., mixte'},{l:'Risque',v:'Variable'},{l:'Accès',v:'Dès quelques euros'}],
+     p:['Large diversification automatique','Gestion professionnelle','Accessible à partir de petits montants'],
+     c:['Frais de gestion annuels','Capital non garanti','Rendement variable selon marchés'],
+     m:'Les OPCVM (FCP, SICAV) permettent d\'accéder aux marchés financiers mondiaux avec une gestion professionnelle.'},
+    {id:'cto',n:'Comptes-titres',ic:'ti-chart-bar',s:'Investissement direct en valeurs mobilières',tags:['Sans plafond','Tous actifs','Liberté totale'],
+     f:[{l:'Plafond',v:'Aucun'},{l:'Disponibilité',v:'Immédiate (J+2)'},{l:'Fiscalité',v:'PFU 30 %'},{l:'Supports',v:'Actions, ETF, oblig., OPCVM'},{l:'Risque',v:'Variable (élevé possible)'},{l:'Accès',v:'Tous publics'}],
+     p:['Aucune limite de versement','Accès aux marchés mondiaux','Grande flexibilité des supports'],
+     c:['Fiscalité pleine (PFU 30 %)','Capital non garanti','Requiert des connaissances financières'],
+     m:'Le CTO est la solution la plus flexible mais la moins fiscalement avantageuse. À combiner avec un PEA pour optimiser la fiscalité.'},
+    {id:'erb',n:'Épargne retraite bancaire',ic:'ti-beach',s:'Placement dédié à la constitution d\'une retraite',tags:['Retraite','Avantage fiscal','Long terme'],
+     f:[{l:'Plafond',v:'Variable selon contrat'},{l:'Durée',v:'Long terme'},{l:'Disponibilité',v:'À la retraite'},{l:'Fiscalité',v:'Déduction possible'},{l:'Supports',v:'Selon contrat bancaire'},{l:'Risque',v:'Variable'}],
+     p:['Spécialisé dans la préparation retraite','Avantage fiscal possible à l\'entrée','Constitution d\'un capital progressif'],
+     c:['Fonds bloqués jusqu\'à la retraite','Sortie uniquement à la retraite','Dépend des conditions du contrat'],
+     m:'Alternative bancaire au PER assurantiel. À comparer selon les frais, les supports proposés et les conditions de sortie.'},
+  ]
+};
+const QUIZ=[
+  {q:'Quel livret réglementé est accessible à tous, totalement exonéré d\'impôts et offre un taux de 3 % nets ?',o:['LEP','LDDS','Livret A','Livret Jeune'],a:2,e:'Le Livret A est exonéré d\'IR et de prélèvements sociaux, accessible à tous publics, avec un plafond de 22 950 €.'},
+  {q:'Le LEP est réservé à quelle catégorie de clients ?',o:['Les jeunes de 12 à 25 ans','Les clients sous conditions de revenus','Les professionnels indépendants','Tous les clients'],a:1,e:'Le LEP est soumis à des conditions de revenus. Il offre le meilleur taux des livrets réglementés (4 % nets) aux ménages modestes.'},
+  {q:'Quel produit donne un droit à prêt immobilier et nécessite des versements annuels minimum de 540 € ?',o:['CEL','Compte à terme','PEL','PER'],a:2,e:'Le PEL (Plan d\'Épargne Logement) ouvre un droit à prêt immobilier. Il exige un versement minimum annuel de 540 €.'},
+  {q:'Après combien d\'années l\'assurance-vie bénéficie-t-elle d\'une fiscalité particulièrement avantageuse ?',o:['3 ans','5 ans','8 ans','10 ans'],a:2,e:'L\'assurance-vie bénéficie d\'une fiscalité avantageuse après 8 ans : abattement annuel de 4 600 € (9 200 € pour un couple) sur les gains.'},
+  {q:'Quel est le plafond de versement du PEA ?',o:['92 000 €','150 000 €','61 200 €','Aucun plafond'],a:1,e:'Le PEA est plafonné à 150 000 €. Il permet l\'exonération d\'IR sur les plus-values après 5 ans de détention.'},
+  {q:'Quelle est la principale caractéristique fiscale du PER à l\'entrée ?',o:['Capital garanti','Disponibilité immédiate','Déduction des versements du revenu imposable','Exonération totale à la sortie'],a:2,e:'Le PER permet de déduire les versements du revenu imposable, générant une économie d\'impôt immédiate pouvant atteindre 45 % du montant versé.'},
+];
+const seen=new Set();
+let quizState={},quizScore=0;
+function updProg(){const n=seen.size;document.getElementById('prog-lbl').textContent=n+' / 20';document.getElementById('prog-fg').style.width=Math.round(n/20*100)+'%';}
+function setNav(p){document.querySelectorAll('.nb').forEach(b=>b.classList.toggle('active',b.dataset.page===p));}
+function go(p){setNav(p);if(p==='accueil')rAccueil();else if(p==='ct'||p==='mt'||p==='lt')rList(p);else if(p==='recap')rRecap();else if(p==='quiz')rQuiz();}
+function show(h){document.getElementById('content').innerHTML=h;}
+function rAccueil(){show(`<div class="hero"><div class="hero-eyebrow">Module 3 — Conseil clientèle</div><div class="hero-title">Produits d'épargne bancaire</div><div class="hero-desc">Explorez les 20 produits d'épargne organisés par horizon de placement. Cliquez sur chaque produit pour découvrir sa fiche complète.</div><div class="hero-stats"><div class="stat"><div class="stat-n">20</div><div class="stat-l">Produits</div></div><div class="sdiv"></div><div class="stat"><div class="stat-n">3</div><div class="stat-l">Catégories</div></div><div class="sdiv"></div><div class="stat"><div class="stat-n" id="hs">${seen.size}</div><div class="stat-l">Consultés</div></div></div></div><div class="cat-cards"><div class="cat-card" style="border-top-color:#1D9E75" onclick="go('ct')"><div class="cc-icon"><i class="ti ti-clock" style="color:#1D9E75;font-size:20px"></i></div><div class="cc-name">Court terme</div><div class="cc-info">7 produits · moins de 2 ans</div><div class="cc-link" style="color:#0F6E56">Explorer <i class="ti ti-arrow-right"></i></div></div><div class="cat-card" style="border-top-color:#378ADD" onclick="go('mt')"><div class="cc-icon"><i class="ti ti-calendar" style="color:#378ADD;font-size:20px"></i></div><div class="cc-name">Moyen terme</div><div class="cc-info">5 produits · 2 à 8 ans</div><div class="cc-link" style="color:#185FA5">Explorer <i class="ti ti-arrow-right"></i></div></div><div class="cat-card" style="border-top-color:#7F77DD" onclick="go('lt')"><div class="cc-icon"><i class="ti ti-trending-up" style="color:#7F77DD;font-size:20px"></i></div><div class="cc-name">Long terme</div><div class="cc-info">8 produits · plus de 8 ans</div><div class="cc-link" style="color:#534AB7">Explorer <i class="ti ti-arrow-right"></i></div></div></div><div class="rule-box"><div class="rule-icon"><i class="ti ti-scale" style="color:#DAA520;font-size:16px"></i></div><div><div class="rule-title">Règle fondamentale — Risque vs. Rendement</div><div class="rule-text">Plus l'horizon de placement est long et le risque accepté élevé, plus le potentiel de rendement est important. Un placement sécurisé offre en contrepartie un rendement limité.</div></div></div>`);}
+function rList(cat){const m=CM[cat];const tiles=DB[cat].map((p,i)=>`<div class="ptile ${cat}${seen.has(p.id)?' seen':''}" onclick="oDet('${cat}',${i})" tabindex="0" onkeydown="if(event.key==='Enter')oDet('${cat}',${i})"><div class="tile-icon"><i class="ti ${p.ic}" style="color:${m.color};font-size:20px"></i></div><div class="tile-name">${p.n}</div><div class="tile-cat ${cat}">${m.label}</div></div>`).join('');show(`<div class="cat-strip"><div class="cs-left"><div class="cs-dot" style="background:${m.color}"></div><span class="cs-name">${m.label}</span><span class="cs-hz">${m.hz}</span></div><div class="cs-chips">${m.chips.map(c=>`<span class="chip" style="background:${m.bg};color:${m.tc};border:1px solid ${m.tc}33">${c}</span>`).join('')}</div></div><p style="font-size:11px;color:var(--muted);padding:10px 20px 0">Cliquez sur un produit pour afficher sa fiche complète.</p><div class="prod-grid">${tiles}</div>`);}
+function oDet(cat,idx){const p=DB[cat][idx];const m=CM[cat];seen.add(p.id);updProg();setNav('');const prods=DB[cat];const hp=idx>0,hn=idx<prods.length-1;show(`<button class="back-btn" onclick="go('${cat}')"><i class="ti ti-arrow-left" style="font-size:13px"></i> Retour — ${m.label}</button><div class="dcard"><div class="dh"><div class="dh-top"><div class="dh-left"><i class="ti ${p.ic}" style="color:${m.color};font-size:26px"></i><div><div class="dh-title">${p.n}</div><div class="dh-sub">${p.s}</div></div></div><span class="dh-badge" style="background:${m.bg};color:${m.tc};border:1px solid ${m.tc}33">${m.label} · ${m.hz}</span></div><div class="dh-tags">${p.tags.map(t=>`<span class="dtag">${t}</span>`).join('')}</div></div><div class="dsec"><div class="dsec-title">Caractéristiques clés</div><div class="fields-grid">${p.f.map(f=>`<div class="fi"><div class="fi-l">${f.l}</div><div class="fi-v">${f.v}</div></div>`).join('')}</div></div><div class="dsec"><div class="dsec-title">Avantages & Inconvénients</div><div class="pc-grid"><div class="pcbox pros"><div class="pcbox-t">Avantages</div>${p.p.map(x=>`<div class="pci"><div class="pcdot"></div><span>${x}</span></div>`).join('')}</div><div class="pcbox cons"><div class="pcbox-t">Inconvénients</div>${p.c.map(x=>`<div class="pci"><div class="pcdot"></div><span>${x}</span></div>`).join('')}</div></div></div><div class="dsec" style="border-bottom:none"><div class="dsec-title">Conseil du formateur</div><div class="memo-box"><i class="ti ti-bulb" style="color:#B8860B;font-size:16px;flex-shrink:0;margin-top:1px"></i><div class="memo-text">${p.m}</div></div></div><div class="dnav"><button class="dnav-btn" onclick="oDet('${cat}',${idx-1})" ${!hp?'disabled':''}><i class="ti ti-arrow-left"></i> Précédent</button><span class="dnav-pos">${idx+1} / ${prods.length}</span><button class="dnav-btn" onclick="oDet('${cat}',${idx+1})" ${!hn?'disabled':''}>Suivant <i class="ti ti-arrow-right"></i></button></div></div>`);}
+function rRecap(){show(`<div class="recap-wrap"><table class="rtable"><thead><tr><th>Type d'épargne</th><th>Horizon</th><th>Risque</th><th>Rendement</th><th>Disponibilité</th></tr></thead><tbody><tr class="rc"><td><strong>Court terme</strong></td><td>&lt; 2 ans</td><td>Très faible</td><td>Faible</td><td>Immédiate</td></tr><tr class="rm"><td><strong>Moyen terme</strong></td><td>2 à 8 ans</td><td>Faible à modéré</td><td>Moyen</td><td>Variable</td></tr><tr class="rl"><td><strong>Long terme</strong></td><td>&gt; 8 ans</td><td>Modéré à élevé</td><td>Élevé</td><td>Faible</td></tr></tbody></table><div style="font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Exemple de répartition — 20 000 €</div><div class="ex-grid"><div class="excard" style="border-top-color:#1D9E75"><div class="ex-lbl">Épargne de sécurité</div><div class="ex-prod">Livret A</div><div class="ex-obj">Disponibilité immédiate</div><div class="ex-amt" style="color:#0F6E56">5 000 €</div></div><div class="excard" style="border-top-color:#378ADD"><div class="ex-lbl">Projet voiture · 4 ans</div><div class="ex-prod">PEL</div><div class="ex-obj">Financement immobilier</div><div class="ex-amt" style="color:#185FA5">7 000 €</div></div><div class="excard" style="border-top-color:#7F77DD"><div class="ex-lbl">Préparation retraite</div><div class="ex-prod">Assurance-vie / PER</div><div class="ex-obj">Constitution patrimoine</div><div class="ex-amt" style="color:#534AB7">8 000 €</div></div></div><div class="kp-box"><div class="kp-hd">Points clés à retenir</div><div class="kpi"><div class="kpi-icon" style="background:#E1F5EE"><i class="ti ti-clock" style="color:#1D9E75;font-size:13px"></i></div><div class="kpi-text">L'épargne courte durée privilégie la <strong>sécurité</strong> et la <strong>disponibilité immédiate</strong> des fonds.</div></div><div class="kpi"><div class="kpi-icon" style="background:#E6F1FB"><i class="ti ti-calendar" style="color:#378ADD;font-size:13px"></i></div><div class="kpi-text">L'épargne moyenne durée permet de <strong>préparer des projets</strong> avec un meilleur rendement.</div></div><div class="kpi"><div class="kpi-icon" style="background:#EEEDFE"><i class="ti ti-trending-up" style="color:#7F77DD;font-size:13px"></i></div><div class="kpi-text">L'épargne longue durée vise la <strong>constitution d'un patrimoine</strong> et la préparation de la retraite.</div></div><div class="kpi"><div class="kpi-icon" style="background:#FDF3D0"><i class="ti ti-scale" style="color:#B8860B;font-size:13px"></i></div><div class="kpi-text">Plus le rendement potentiel est élevé, plus le <strong>risque est important</strong>. Le conseiller adapte sa recommandation au profil client.</div></div></div></div>`);}
+function rQuiz(){quizState={};quizScore=0;const dots=QUIZ.map((_,i)=>`<div class="qpd" id="qpd${i}"></div>`).join('');const qs=QUIZ.map((q,qi)=>`<div class="qcard"><div class="qhd"><div class="qnum">Question ${qi+1} / ${QUIZ.length}</div><div class="qtext">${q.q}</div></div><div class="qopts">${q.o.map((o,oi)=>`<button class="qopt" id="qo${qi}_${oi}" onclick="ansQ(${qi},${oi})">${o}</button>`).join('')}</div><div class="qfb" id="qfb${qi}" style="display:none"></div></div>`).join('');show(`<div class="quiz-wrap"><div class="qprog">${dots}</div>${qs}<div class="score-box" id="qscore" style="display:none"><div class="score-ring"><span class="score-n" id="qsn"></span></div><div class="score-msg" id="qsm"></div><div class="score-sub" id="qss"></div><button class="reset-btn" onclick="rQuiz()">Recommencer le quiz</button></div></div>`);}
+function ansQ(qi,oi){if(quizState[qi]!==undefined)return;quizState[qi]=oi;const q=QUIZ[qi];const ok=oi===q.a;if(ok)quizScore++;for(let i=0;i<q.o.length;i++){const b=document.getElementById('qo'+qi+'_'+i);b.disabled=true;if(i===q.a)b.classList.add('correct');else if(i===oi&&!ok)b.classList.add('wrong');}const fb=document.getElementById('qfb'+qi);fb.style.display='block';fb.className='qfb '+(ok?'ok':'ko');fb.innerHTML='<strong>'+(ok?'Correct !':'Incorrect.')+'</strong> '+q.e;const dot=document.getElementById('qpd'+qi);if(dot)dot.classList.add('done');if(Object.keys(quizState).length===QUIZ.length){setTimeout(()=>{const pct=Math.round(quizScore/QUIZ.length*100);document.getElementById('qsn').textContent=quizScore+'/'+QUIZ.length;document.getElementById('qsm').textContent=pct>=80?'Excellent travail !':pct>=60?'Bonne progression !':'Continuez à réviser.';document.getElementById('qss').textContent=pct+' % de bonnes réponses';document.getElementById('qscore').style.display='block';},400);}}
+rAccueil();updProg();
+</script>
+</body>
+</html>
